@@ -10,22 +10,29 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = User::all();
+        if ($request->get('search')){
+            $searchValue = $request->get('search');
+            $users = User::where('username','like','%'.$searchValue.'%')
+                ->orWhere('first_name','like','%'.$searchValue.'%')
+                ->orWhere('last_name','like','%'.$searchValue.'%')
+                ->get();
+        }else $users = User::all();
 
         return inertia('Users/index',['users' => $users]);
     }
 
-    public function create()
+    public function create(): Response
     {
         return inertia('Users/create');
     }
 
-    public function store(Request $request, RegistrationService $service)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'lastName' => 'required|string|max:255',
@@ -48,18 +55,32 @@ class UserController extends Controller
         return redirect(route('users.index'))->with('success','User successfully created');
     }
 
-    public function edit(int $id)
+    public function show(int $id): Response
     {
-        $user = User::query()->findOrFail($id)->get();
+        $user = User::findOrFail($id);
 
         return inertia('Users/edit',['user' => $user]);
     }
 
-    public function update()
+    public function update(Request $request, int $id): RedirectResponse
     {
-        $users = User::all();
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'firstName' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:'.User::class.',email,'.$id.',id',
+        ]);
+        $user = User::updateOrCreate(
+            ['id' => $id],
+            [
+                'username' => $request->username,
+                'first_name' => $request->firstName,
+                'last_name' => $request->lastName,
+                'email' => $request->email,
+            ]
+        );
 
-        return inertia('Users/index',['users' => $users]);
+        return redirect(route('users.index'));
     }
 
     public function destroy(int $id)

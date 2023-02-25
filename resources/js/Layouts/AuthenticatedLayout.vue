@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-200">
             <nav class="bg-teal-300 border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +34,7 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
                             <div class="hidden text-amber-100 space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('profile.edit')" class="text-black" :active="route().current('employees')">
+                                <NavLink class="text-black" :active="route().current('employees')">
                                     Employees Management
                                 </NavLink>
                             </div>

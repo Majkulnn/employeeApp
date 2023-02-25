@@ -28,6 +28,19 @@ defineProps({users : Object,})
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-1/3">
                 <form @submit.prevent="submit">
+
+                    <div>
+                        <InputLabel for="firstName" value="Firstname"/>
+
+                        <TextInput
+                            id="firstName" type="text" class="mt-1 block w-full"
+                            v-model="form.firstName"
+                            autofocus
+                            required autocomplete="firstName"
+                        />
+
+                        <InputError class="mt-2" :message="form.errors.firstName" />
+                    </div>
                     <div>
                         <InputLabel for="lastName" value="Lastname" />
 
@@ -37,23 +50,10 @@ defineProps({users : Object,})
                             class="mt-1 block w-full"
                             v-model="form.lastName"
                             required
-                            autofocus
                             autocomplete="lastName"
                         />
 
                         <InputError class="mt-2" :message="form.errors.lastName" />
-                    </div>
-
-                    <div>
-                        <InputLabel for="firstName" value="Firstname"/>
-
-                        <TextInput
-                            id="firstName" type="text" class="mt-1 block w-full"
-                            v-model="form.firstName"
-                            required autofocus autocomplete="firstName"
-                        />
-
-                        <InputError class="mt-2" :message="form.errors.firstName" />
                     </div>
 
                     <div class="mt-4">
@@ -73,7 +73,7 @@ defineProps({users : Object,})
 
                     <div class="flex items-center justify-end mt-4">
                         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Register
+                            Create
                         </PrimaryButton>
                     </div>
                 </form>
