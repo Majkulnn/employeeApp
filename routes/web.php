@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource('/users', UserController::class);
+    Route::resource('/countries', \App\Http\Controllers\CountryController::class);
 });
 
 require __DIR__.'/auth.php';

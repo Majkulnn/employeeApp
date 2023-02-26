@@ -55,7 +55,7 @@ class UserController extends Controller
         return redirect(route('users.index'))->with('success','User successfully created');
     }
 
-    public function show(int $id): Response
+    public function edit(int $id): Response
     {
         $user = User::findOrFail($id);
 
@@ -83,7 +83,7 @@ class UserController extends Controller
         return redirect(route('users.index'));
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         User::destroy($id);
 
