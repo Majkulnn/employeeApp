@@ -65,8 +65,8 @@ const showingNavigationDropdown = ref(false);
                                     </template>
                                     <template #content>
                                         <DropdownLink :href="route('countries.index')"> Country </DropdownLink>
-                                        <DropdownLink :href="route('dashboard')"> State </DropdownLink>
-                                        <DropdownLink :href="route('dashboard')"> City </DropdownLink>
+                                        <DropdownLink :href="route('states.index')"> State </DropdownLink>
+                                        <DropdownLink :href="route('cities.index')"> City </DropdownLink>
                                         <DropdownLink :href="route('dashboard')"> Department </DropdownLink>
                                     </template>
                                 </Dropdown>
