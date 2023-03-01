@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string("first_name");
             $table->string("middle_name")->nullable();
             $table->string("address");
-            $table->foreignIdFor(Department::class)->constrained();
-            $table->foreignIdFor(City::class)->constrained();
-            $table->foreignIdFor(State::class)->constrained();
-            $table->foreignIdFor(Country::class)->constrained();
+            $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(City::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(State::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Country::class)->constrained()->cascadeOnDelete();
             $table->char("zip_code",10);
             $table->date("birthdate")->nullable();
             $table->date("date_hired")->nullable();

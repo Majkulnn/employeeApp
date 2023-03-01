@@ -7,17 +7,17 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-defineProps({country : Object,})
+defineProps({state : Object, countries : Object})
 
-const country = usePage().props.country;
+const state = usePage().props.state;
 
-const form = useForm('ChangeUser',{
-    country_code: country.country_code,
-    name: country.name,
+const form = useForm({
+    country_id: state.country_id,
+    name: state.name,
     terms: false,
 });
 const submit = () => {
-    form.put(`/countries/${country.id}`);
+    form.put(`/states/${state.id}`);
 };
 </script>
 
@@ -26,7 +26,7 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Country Data</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit State Data</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 shadow-lg  lg:px-8 w-1/3">
@@ -35,16 +35,14 @@ const submit = () => {
                 </div>
                 <form @submit.prevent="submit">
                     <div>
-                        <InputLabel for="country_code" value="Code"/>
+                        <InputLabel for="country_id" value="Country Code"/>
 
-                        <TextInput
-                            id="country_code" type="text" class="mt-1 block w-full"
-                            v-model="form.country_code"
-                            autofocus
-                            required autocomplete="country_code"
-                        />
+                        <select v-model="form.country_id">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="country in countries" :value="country.id">{{country.name}}</option>
+                        </select>
 
-                        <InputError class="mt-2" :message="form.errors.country_code" />
+                        <InputError class="mt-2" :message="form.errors.country_id" />
                     </div>
                     <div>
                         <InputLabel for="name" value="Name" />
@@ -62,7 +60,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-center space-x-36 mt-4 mx-0">
-                        <Link :href="`/countries/${country.id}`" method="delete" as="button" class="rounded-md">
+                        <Link :href="`/states/${state.id}`" method="delete" as="button" class="rounded-md">
                             <SecondaryButton class="bg-red-700 text-white hover:bg-red-800">
                                 Delete
                             </SecondaryButton>

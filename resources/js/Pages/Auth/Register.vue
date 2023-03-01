@@ -29,7 +29,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="username" value="Usename" />
+                <InputLabel for="username" value="Username" />
 
                 <TextInput
                     id="username"
@@ -44,6 +44,18 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.username" />
             </div>
 
+
+            <div>
+                <InputLabel for="firstName" value="Firstname"/>
+
+                <TextInput
+                    id="firstName" type="text" class="mt-1 block w-full"
+                    v-model="form.firstName"
+                    required autofocus autocomplete="firstName"
+                />
+
+                <InputError class="mt-2" :message="form.errors.firstName" />
+            </div>
             <div>
                 <InputLabel for="lastName" value="Lastname" />
 
@@ -58,18 +70,6 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.lastName" />
-            </div>
-
-            <div>
-                <InputLabel for="firstName" value="Firstname"/>
-
-                <TextInput
-                    id="firstName" type="text" class="mt-1 block w-full"
-                    v-model="form.firstName"
-                    required autofocus autocomplete="firstName"
-                />
-
-                <InputError class="mt-2" :message="form.errors.firstName" />
             </div>
 
             <div class="mt-4">

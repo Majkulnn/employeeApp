@@ -32,8 +32,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('/users', UserController::class);
-    Route::resource('/countries', \App\Http\Controllers\CountryController::class);
+    Route::resource('/users', UserController::class)->except('show');
+    Route::resource('/countries', \App\Http\Controllers\CountryController::class)->except('show');
+    Route::resource('/states', \App\Http\Controllers\StateController::class)->except('show');
+    Route::resource('/cities', \App\Http\Controllers\CityController::class)->except('show');
+    Route::resource('/departments', \App\Http\Controllers\DepartmentController::class)->except('show');
 });
 
 require __DIR__.'/auth.php';

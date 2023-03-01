@@ -7,17 +7,16 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-defineProps({country : Object,})
+defineProps({department : Object,})
 
-const country = usePage().props.country;
+const department = usePage().props.department;
 
-const form = useForm('ChangeUser',{
-    country_code: country.country_code,
-    name: country.name,
+const form = useForm({
+    name: department.name,
     terms: false,
 });
 const submit = () => {
-    form.put(`/countries/${country.id}`);
+    form.put(`/departments/${department.id}`);
 };
 </script>
 
@@ -26,7 +25,7 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Country Data</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Department Data</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 shadow-lg  lg:px-8 w-1/3">
@@ -34,18 +33,6 @@ const submit = () => {
                     Change Data
                 </div>
                 <form @submit.prevent="submit">
-                    <div>
-                        <InputLabel for="country_code" value="Code"/>
-
-                        <TextInput
-                            id="country_code" type="text" class="mt-1 block w-full"
-                            v-model="form.country_code"
-                            autofocus
-                            required autocomplete="country_code"
-                        />
-
-                        <InputError class="mt-2" :message="form.errors.country_code" />
-                    </div>
                     <div>
                         <InputLabel for="name" value="Name" />
 
@@ -62,7 +49,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-center space-x-36 mt-4 mx-0">
-                        <Link :href="`/countries/${country.id}`" method="delete" as="button" class="rounded-md">
+                        <Link :href="`/departments/${department.id}`" method="delete" as="button" class="rounded-md">
                             <SecondaryButton class="bg-red-700 text-white hover:bg-red-800">
                                 Delete
                             </SecondaryButton>
