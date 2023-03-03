@@ -3,28 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Services\RegistrationService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
     public function index(Request $request): Response
     {
-        if ($request->get('search')){
+        if ($request->get('search')) {
             $searchValue = $request->get('search');
-            $users = User::where('username','like','%'.$searchValue.'%')
-                ->orWhere('first_name','like','%'.$searchValue.'%')
-                ->orWhere('last_name','like','%'.$searchValue.'%')
+            $users = User::where('username', 'like', '%'.$searchValue.'%')
+                ->orWhere('first_name', 'like', '%'.$searchValue.'%')
+                ->orWhere('last_name', 'like', '%'.$searchValue.'%')
                 ->get();
-        }else $users = User::all();
+        } else {
+            $users = User::all();
+        }
 
-        return inertia('Users/index',['users' => $users]);
+        return inertia('Users/index', ['users' => $users]);
     }
 
     public function create(): Response
@@ -52,14 +52,14 @@ class UserController extends Controller
 
         event(new Registered($user));
 
-        return redirect(route('users.index'))->with('success','User successfully created');
+        return redirect(route('users.index'))->with('success', 'User successfully created');
     }
 
     public function edit(int $id): Response
     {
         $user = User::findOrFail($id);
 
-        return inertia('Users/edit',['user' => $user]);
+        return inertia('Users/edit', ['user' => $user]);
     }
 
     public function update(Request $request, int $id): RedirectResponse

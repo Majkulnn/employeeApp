@@ -14,12 +14,14 @@ class DepartmentController extends Controller
     {
         if ($request->get('search')) {
             $searchValue = $request->get('search');
-            $departments = Department::where('name','like','%'.$searchValue.'%')
-                ->orWhere('country_code','like','%'.$searchValue.'%')
+            $departments = Department::where('name', 'like', '%'.$searchValue.'%')
+                ->orWhere('country_code', 'like', '%'.$searchValue.'%')
                 ->get();
-        }else $departments = Department::all();
+        } else {
+            $departments = Department::all();
+        }
 
-        return inertia('Departments/index',[
+        return inertia('Departments/index', [
             'departments' => $departments,
         ]);
     }
@@ -27,7 +29,7 @@ class DepartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create():Response
+    public function create(): Response
     {
         return inertia('Departments/create');
     }
@@ -35,12 +37,11 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DepartmentStoreRequest $request):RedirectResponse
+    public function store(DepartmentStoreRequest $request): RedirectResponse
     {
-
         Department::create($request->validated());
 
-        return redirect(route('departments.index'))->with('success','Country successfully created');
+        return redirect(route('departments.index'))->with('success', 'Country successfully created');
     }
 
     /**
@@ -48,7 +49,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department): Response
     {
-        return inertia('Departments/edit',['department' => $department]);
+        return inertia('Departments/edit', ['department' => $department]);
     }
 
     /**

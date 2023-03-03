@@ -16,12 +16,14 @@ class CountryController extends Controller
     {
         if ($request->get('search')) {
             $searchValue = $request->get('search');
-            $countries = Country::where('name','like','%'.$searchValue.'%')
-                        ->orWhere('country_code','like','%'.$searchValue.'%')
+            $countries = Country::where('name', 'like', '%'.$searchValue.'%')
+                        ->orWhere('country_code', 'like', '%'.$searchValue.'%')
                         ->get();
-        }else $countries = Country::all();
+        } else {
+            $countries = Country::all();
+        }
 
-        return inertia('Countries/index',[
+        return inertia('Countries/index', [
             'countries' => $countries,
         ]);
     }
@@ -29,7 +31,7 @@ class CountryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create():Response
+    public function create(): Response
     {
         return inertia('Countries/create');
     }
@@ -37,7 +39,7 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'country_code' => 'required|uppercase|max:3|unique:'.Country::class,
@@ -49,7 +51,7 @@ class CountryController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect(route('countries.index'))->with('success','Country successfully created');
+        return redirect(route('countries.index'))->with('success', 'Country successfully created');
     }
 
     /**
@@ -65,7 +67,7 @@ class CountryController extends Controller
      */
     public function edit(Country $country): Response
     {
-        return inertia('Countries/edit',['country' => $country]);
+        return inertia('Countries/edit', ['country' => $country]);
     }
 
     /**
