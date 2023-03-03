@@ -15,11 +15,14 @@ class StateController extends Controller
     {
         if ($request->get('search')) {
             $searchValue = $request->get('search');
-            $states = State::where('name','like','%'.$searchValue.'%')
+            $states = State::where('name', 'like', '%'.$searchValue.'%')
                 ->with('country')
                 ->get();
-        }else $states = State::with('country')->get();
-        return inertia('States/index',[
+        } else {
+            $states = State::with('country')->get();
+        }
+
+        return inertia('States/index', [
             'states' => $states,
         ]);
     }
@@ -27,24 +30,24 @@ class StateController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create():Response
+    public function create(): Response
     {
-        $countries = Country::all('id','name');
+        $countries = Country::all('id', 'name');
 
         return inertia('States/create', [
-            'countries' => $countries
-            ]);
+            'countries' => $countries,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StateStoreRequest $request):RedirectResponse
+    public function store(StateStoreRequest $request): RedirectResponse
     {
         $country = Country::find($request->country_id);
         $country->states()->create($request->validated());
 
-        return redirect(route('states.index'))->with('success','State successfully created');
+        return redirect(route('states.index'))->with('success', 'State successfully created');
     }
 
     /**
@@ -61,10 +64,11 @@ class StateController extends Controller
     public function edit(State $state): Response
     {
         $countries = Country::all();
-        return inertia('States/edit',[
+
+        return inertia('States/edit', [
             'state' => $state,
-            'countries' => $countries
-            ]);
+            'countries' => $countries,
+        ]);
     }
 
     /**

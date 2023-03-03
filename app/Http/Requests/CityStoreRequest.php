@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\State;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CityStoreRequest extends FormRequest
@@ -24,7 +23,7 @@ class CityStoreRequest extends FormRequest
     {
         return [
             'state_id' => ['required'],
-            'name' => ['required','string','max:255',]
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 }

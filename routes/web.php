@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,12 +35,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
     Route::resource('/users', UserController::class)->except('show');
-    Route::resource('/countries', \App\Http\Controllers\CountryController::class)->except('show');
-    Route::resource('/states', \App\Http\Controllers\StateController::class)->except('show');
-    Route::resource('/cities', \App\Http\Controllers\CityController::class)->except('show');
-    Route::resource('/departments', \App\Http\Controllers\DepartmentController::class)->except('show');
+    Route::resource('/countries', CountryController::class)->except('show');
+    Route::resource('/states', StateController::class)->except('show');
+    Route::resource('/cities', CityController::class)->except('show');
+    Route::resource('/departments', DepartmentController::class)->except('show');
+    Route::resource('/employees', EmployeeController::class)->except('store');
 });
 
 require __DIR__.'/auth.php';

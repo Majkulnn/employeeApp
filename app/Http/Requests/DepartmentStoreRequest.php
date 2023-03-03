@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\State;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DepartmentStoreRequest extends FormRequest
@@ -23,7 +22,7 @@ class DepartmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','string','max:255',]
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 }
